@@ -1,0 +1,37 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: eleclet <eleclet@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2016/03/10 14:43:47 by eleclet           #+#    #+#              #
+#    Updated: 2016/04/02 21:33:51 by eleclet          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = ft_select
+CFLAGS = -Werror -Wall -Wextra -g
+
+SRC = main.c term.c lst.c print.c wich_key.c putc.c termcap.c curse.c signal.c \
+ ext_lst.c
+
+OBJ = $(SRC:.c=.o)
+
+all : $(NAME)
+
+$(NAME) : $(OBJ)
+	@make -C libft/
+	gcc $(OBJ)  $(CFLAGS) -ltermcap -Llibft -lft -o $(NAME)
+	@echo "$(NAME) built"
+
+%.o: %.c
+	gcc -c $(CFLAGS) $<
+
+clean :
+	rm -rf $(OBJ)
+	@make -C libft/ clean
+fclean : clean
+	@rm -f $(NAME)
+	@make -C libft/ fclean
+re : fclean all
